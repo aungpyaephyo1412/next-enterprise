@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbo",
+    "dev": "cross-env FORCE_COLOR=1 next dev --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "lint:fix": "next lint --fix",
+    "analyze": "cross-env ANALYZE=true next build",
     "format:check": "prettier --check --ignore-path .gitignore '**/*.ts' '**/*.tsx'",
     "format:fix": "prettier --write --ignore-path .gitignore '**/*.ts' '**/*.tsx'",
     "prepare": "husky",
@@ -22,6 +24,7 @@
   "dependencies": {
     "lucide-react": "^0.401.0",
     "next": "14.2.5",
+    "next-auth": "^5.0.0-beta.19",
     "react": "^18",
     "react-dom": "^18"
   },
@@ -38,6 +41,7 @@
     "@types/react-dom": "^18",
     "@vercel/otel": "^1.9.1",
     "clsx": "^2.1.1",
+    "cross-env": "^7.0.3",
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
     "eslint-config-prettier": "^9.1.0",
