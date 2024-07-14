@@ -14,10 +14,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en' suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body
         suppressHydrationWarning
-        className={cn('transition-colors duration-200 dark:bg-black bg-white')}
+        className={cn('bg-white transition-colors duration-200 dark:bg-black')}
       >
         <Provider>{children}</Provider>
       </body>

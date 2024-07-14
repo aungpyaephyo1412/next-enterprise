@@ -1,13 +1,24 @@
+import { getAuth, login, logout } from '@/actions/auth.action';
 import ThemeToggle from '@/components/theme-toggle';
-import env from '@/env';
 
-const Page = () => {
-  const { ANALYZE } = env();
-  console.log(ANALYZE);
+const Page = async () => {
+  const session = await getAuth();
   return (
-    <section className='min-h-dvh w-full flex flex-col justify-center items-center'>
+    <section
+      title={'session'}
+      className="flex min-h-dvh w-full flex-col items-center justify-center"
+    >
+      <h1>Nextjs template</h1>
       <ThemeToggle />
-      <h1 title='Testing-title'>Nextjs template</h1>
+      {session ? (
+        <form action={logout}>
+          <button>Logout</button>
+        </form>
+      ) : (
+        <form action={login}>
+          <button>Sign in</button>
+        </form>
+      )}
     </section>
   );
 };
