@@ -8,14 +8,14 @@ function ThemeSwitcher() {
   return (
     <button
       onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-      className='flex size-10 items-center justify-center rounded-full opacity-80 outline-none transition-opacity hover:opacity-100'
+      className="flex size-10 items-center justify-center rounded-full opacity-80 outline-none transition-opacity hover:opacity-100"
     >
       {theme === 'light' ? (
-        <SunIcon className='size-5' />
+        <SunIcon className="size-5" />
       ) : (
-        <MoonIcon className='size-5' />
+        <MoonIcon className="size-5" />
       )}
-      <span className='sr-only'>Toggle theme</span>
+      <span className="sr-only">Toggle theme</span>
     </button>
   );
 }

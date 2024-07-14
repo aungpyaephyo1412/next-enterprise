@@ -1,7 +1,7 @@
 import type { NextAuthConfig, Session } from 'next-auth';
 import { NextRequest } from 'next/server';
 
-function handleRedirection(auth: Session | null, request: NextRequest) {
+const handleRedirection = (auth: Session | null, request: NextRequest) => {
   const { nextUrl } = request;
   const isLoggedIn = !!auth?.user;
 
@@ -9,19 +9,17 @@ function handleRedirection(auth: Session | null, request: NextRequest) {
     return true;
   }
   if (isLoggedIn) {
-    const isRedirectPath = ['/login', '/register', '/'].includes(
-      nextUrl.pathname
-    );
+    const isRedirectPath = ['/login', '/register'].includes(nextUrl.pathname);
     if (isRedirectPath) {
       return Response.redirect(new URL('/home', nextUrl));
     }
     return true;
   } else {
     return ['/forgot-password', '/reset-password', '/register'].some((path) =>
-      nextUrl.pathname.startsWith(path)
+      nextUrl.pathname.startsWith(path),
     );
   }
-}
+};
 
 export const authConfig = {
   pages: {
@@ -29,8 +27,7 @@ export const authConfig = {
   },
   callbacks: {
     authorized({ auth, request }) {
-      // return handleRedirection(auth, request);
-      return true;
+      return handleRedirection(auth, request);
     },
   },
   providers: [], // Add providers with an empty array for now

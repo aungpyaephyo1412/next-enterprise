@@ -4,7 +4,7 @@ import withPlugins from "next-compose-plugins"
 /**
  * @type {import('next').NextConfig}
  */
-const config = withPlugins([[withBundleAnalyzer({ enabled: !!process.env.ANALYZE })]], {
+const config = withPlugins([[withBundleAnalyzer({enabled: process.env.ANALYZE === 'ture'})]], {
     reactStrictMode: true,
     logging: {
         fetches: {
@@ -24,10 +24,10 @@ const config = withPlugins([[withBundleAnalyzer({ enabled: !!process.env.ANALYZE
     },
     rewrites() {
         return [
-            { source: "/healthz", destination: "/api/health" },
-            { source: "/api/healthz", destination: "/api/health" },
-            { source: "/health", destination: "/api/health" },
-            { source: "/ping", destination: "/api/health" },
+            {source: "/healthz", destination: "/api/health"},
+            {source: "/api/healthz", destination: "/api/health"},
+            {source: "/health", destination: "/api/health"},
+            {source: "/ping", destination: "/api/health"},
         ]
     },
 })

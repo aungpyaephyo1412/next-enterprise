@@ -1,6 +1,4 @@
-import { authConfig } from '@/auth.config';
-import safeFetch from '@/lib/safeFetch';
-import { userLoginDtoSchema } from '@/types/user.type';
+import { authConfig } from '@/lib/auth.config';
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 
@@ -9,31 +7,31 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
   providers: [
     Credentials({
       async authorize(credentials) {
-        console.log(credentials);
-        const { error, data } = await safeFetch(
-          userLoginDtoSchema,
-          '/auth/login',
-          {
-            cache: 'no-store',
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Accept: 'application/json',
-            },
-            body: JSON.stringify(credentials),
-          }
-        );
-        if (error) return null;
+        console.log(credentials.name);
+        // const { error, data } = await safeFetch(
+        //   userLoginDtoSchema,
+        //   '/auth/login',
+        //   {
+        //     cache: 'no-store',
+        //     method: 'POST',
+        //     headers: {
+        //       'Content-Type': 'application/json',
+        //       Accept: 'application/json',
+        //     },
+        //     body: JSON.stringify(credentials),
+        //   }
+        // );
+        // if (error) return null;
         return {
-          id: data.data.id,
-          name: data.data.name,
-          role: data.data.role,
-          phone: data.data.phone,
-          createdAt: data.data.createdAt,
-          updatedAt: data.data.updatedAt,
-          dateOfBirth: data.data.dateOfBirth,
-          address: data.data.address,
-          jwt: data.jwt,
+          id: 'id',
+          name: 'name',
+          role: 'User',
+          phone: 'phone',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          dateOfBirth: new Date(),
+          address: 'data.data.address',
+          jwt: 'data.jwt',
         };
       },
     }),

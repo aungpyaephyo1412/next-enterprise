@@ -9,9 +9,9 @@ const Provider = async ({ children }: { children: ReactNode }) => {
     <SessionProvider session={session}>
       <ThemeProvider
         disableTransitionOnChange={false}
-        storageKey='theme'
-        attribute='class'
-        defaultTheme='system'
+        storageKey="theme"
+        attribute="class"
+        defaultTheme="system"
         enableSystem
       >
         {children}
