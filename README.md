@@ -210,30 +210,24 @@ declare module '@auth/core/jwt' {
 ### Type safe data fetching with zod
 
 ```ts
-import env from '@/lib/env';
-import z, { ZodSchema } from 'zod';
-
-const safeFetch = async <T extends ZodSchema<any>>(
+const safeFetch = async <T extends ZodSchema>(
   schema: T,
   url: URL | RequestInfo,
   init?: RequestInit,
-): Promise<{ error: any | null; data: z.TypeOf<T> }> => {
-  const { NEXT_PUBLIC_API_URL } = env();
-  const response = await fetch(`${NEXT_PUBLIC_API_URL}${url}`, init);
-  const res = await response.json();
-  if (!response.ok) return { error: res, data: null };
-  const validateFields = schema.safeParse(res);
-  if (!validateFields.success) {
-    return {
-      error: validateFields.error.message,
-      data: null,
-    };
+): Promise<FetchResult<z.TypeOf<T>>> => {
+  try {
+    const fullUrl = `${env.NEXT_PUBLIC_API_URL}${url}`;
+    const jsonData = await fetchJson(fullUrl, init);
+    const { data, error } = validateSchema(schema, jsonData);
+
+    if (error) {
+      return { error, data: null };
+    }
+
+    return { data, error: null };
+  } catch (error) {
+    return { error, data: null };
   }
-  return {
-    data: validateFields.data,
-    error: null,
-  };
 };
-export default safeFetch;
 
 ```

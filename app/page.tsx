@@ -1,8 +1,9 @@
-import { getAuth, login, logout } from '@/actions/auth.action';
+import { login, logout } from '@/actions/auth.action';
+import { auth } from '@/auth';
 import ThemeToggle from '@/components/theme-toggle';
 
 const Page = async () => {
-  const session = await getAuth();
+  const session = await auth();
   return (
     <section
       title={'session'}

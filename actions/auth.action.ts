@@ -1,8 +1,6 @@
 'use server';
 
-import { auth, signIn, signOut } from '@/auth';
-
-export const getAuth = async () => auth().then((r) => r);
+import { signIn, signOut } from '@/auth';
 
 export const login = async () => {
   await signIn('credentials', {});
