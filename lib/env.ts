@@ -4,10 +4,15 @@ const envSchema = z.object({
   AUTH_URL: z.string().url(),
   AUTH_SECRET: z.string(),
 });
-const env = () => {
-  const { error, data } = envSchema.safeParse(process.env);
-  if (error) throw new Error('Invalid environment variable');
-  return data;
-};
+export const getEnvVariables = (): z.infer<typeof envSchema> => {
+  const parsedEnv = envSchema.safeParse(process.env);
 
-export default env;
+  if (!parsedEnv.success) {
+    const errorDetails = parsedEnv.error.errors
+      .map((e) => `${e.path.join('.')}: ${e.message}`)
+      .join(', ');
+    throw new Error(`Invalid environment variable(s): ${errorDetails}`);
+  }
+
+  return parsedEnv.data;
+};
