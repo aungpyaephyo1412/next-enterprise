@@ -13,7 +13,7 @@ const config = withPlugins(
       ],
   ],
   {
-      reactStrictMode: true,
+      reactStrictMode: false,
       logging: {
           fetches: {
               fullUrl: true,
@@ -37,6 +37,20 @@ const config = withPlugins(
               { source: "/health", destination: "/api/health" },
               { source: "/ping", destination: "/api/health" },
           ];
+      },
+      async redirects() {
+          return [
+              {
+                  source: '/',
+                  destination: '/en',
+                  permanent: false,
+              },
+              {
+                  source: '/en',
+                  destination: '/en/home',
+                  permanent: false,
+              },
+          ]
       },
   }
 );

@@ -1,41 +1,7 @@
-import { NextAuthConfig, Session, User } from 'next-auth';
+import { handleRedirection } from '@/helpers';
+import authorizeUser from '@/helpers/authorize-user';
+import { NextAuthConfig } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
-import { NextRequest } from 'next/server';
-
-const handleRedirection = (auth: Session | null, request: NextRequest) => {
-  const { nextUrl } = request;
-  const isLoggedIn = !!auth?.user;
-
-  if (nextUrl.pathname.startsWith('/images')) {
-    return true;
-  }
-  if (isLoggedIn) {
-    const isRedirectPath = ['/login', '/register'].includes(nextUrl.pathname);
-    if (isRedirectPath) {
-      return Response.redirect(new URL('/home', nextUrl));
-    }
-    return true;
-  } else {
-    return ['/forgot-password', '/reset-password', '/register'].some((path) =>
-      nextUrl.pathname.startsWith(path),
-    );
-  }
-};
-
-const authorizeUser = async (credentials: any): Promise<User> => {
-  console.log(credentials.name);
-  return {
-    id: 'id',
-    name: 'name',
-    role: 'User',
-    phone: 'phone',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    dateOfBirth: new Date(),
-    address: 'data.data.address',
-    jwt: 'data.jwt',
-  };
-};
 
 export const authConfig = {
   pages: {
@@ -72,7 +38,6 @@ export const authConfig = {
             jwt: user.jwt,
           };
       }
-
       return token;
     },
     async session({ session, token }) {
