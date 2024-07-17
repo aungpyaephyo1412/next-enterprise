@@ -15,8 +15,7 @@
   },
   "lint-staged": {
     "src/**/*": [
-      "npm run format:fix",
-      "npm run test"
+      "npm run format:fix && npm run test"
     ]
   },
   "dependencies": {
